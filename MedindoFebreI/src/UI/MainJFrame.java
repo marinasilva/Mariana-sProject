@@ -528,7 +528,7 @@ public class MainJFrame extends javax.swing.JFrame {
         x = jTableDisciplinas.getSelectedRow();
         y = 0;
         
-        if (x != -1) {
+        if (x != -1) {//-1 significa que nenhuma linha da tabela foi selecionada
             int id = Integer.valueOf((String) jTableDisciplinas.getValueAt(x, y));
             DisciplinaDAO disciplina = new DisciplinaDAO();
             try {
