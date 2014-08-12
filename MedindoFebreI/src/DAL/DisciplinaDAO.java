@@ -6,6 +6,7 @@
 package DAL;
 
 import Model.Disciplina;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +29,7 @@ public class DisciplinaDAO {
             PreparedStatement st = connection.prepareStatement("INSERT INTO [Disciplina] ([nome]) VALUES (?)");
             st.setString(1, d.getNome());
             return st.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(DisciplinaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
@@ -48,7 +49,7 @@ public class DisciplinaDAO {
                 disciplinaList.add(d);
             }
             return disciplinaList;
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(DisciplinaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
@@ -60,7 +61,7 @@ public class DisciplinaDAO {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement st = connection.prepareStatement("DELETE FROM [Disciplina] WHERE [id] = " + id);
             return st.executeUpdate();            
-        } catch (SQLException e) {
+        } catch (SQLException|UnknownHostException  e) {
             Logger.getLogger(DisciplinaDAO.class.getName()).log(Level.SEVERE, null, e);
             return -1;
         }
@@ -73,7 +74,7 @@ public class DisciplinaDAO {
             PreparedStatement st = connection.prepareStatement("UPDATE [Disciplina] SET [nome] = ? WHERE [id] = " + d.getId());
             st.setString(1, d.getNome());
             return st.execute();
-        } catch (SQLException e) {
+        } catch (SQLException|UnknownHostException  e) {
             Logger.getLogger(DisciplinaDAO.class.getName()).log(Level.SEVERE, null, e);
             return false;
         }

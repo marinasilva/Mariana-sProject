@@ -6,6 +6,7 @@
 package DAL;
 
 import Model.Materia;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +31,7 @@ public class MateriaDAO {
             st.setInt(2, m.getIdDisciplina());
             st.setInt(3, m.getSerie());
             return st.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
@@ -51,7 +52,7 @@ public class MateriaDAO {
                 materiaList.add(m);
             }
             return materiaList;
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
@@ -68,7 +69,7 @@ public class MateriaDAO {
                 disciplinasList.add(result.getString("nome"));
             }
             return disciplinasList;
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
@@ -80,7 +81,7 @@ public class MateriaDAO {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement st = connection.prepareStatement("DELETE FROM [Materia] WHERE [id] = " + id);
             return st.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
@@ -98,7 +99,7 @@ public class MateriaDAO {
             m.setIdDisciplina(result.getInt("idDisciplina"));
             m.setSerie(result.getInt("serie"));
             return m;
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
@@ -113,7 +114,7 @@ public class MateriaDAO {
             st.setInt(2, m.getIdDisciplina());
             st.setInt(3, m.getSerie());
             return st.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
              Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
