@@ -31,7 +31,7 @@ public class MainJFrame extends javax.swing.JFrame {
         initComponents();
         loadTestesGrid();
         loadDisciplinasGrid();
-        //loadMateriasGrid();
+        loadMateriasGrid();
         loadDisciplinasCmb();
         loadSerieCmb();
     }
@@ -520,14 +520,14 @@ public class MainJFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Favor selecionar uma disciplina para ser editada.");
         }
-        loadDisciplinasGrid();        
+        loadDisciplinasGrid();
     }//GEN-LAST:event_btnUpdateDisciplinaActionPerformed
 
     private void btnDeletarDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarDisciplinaActionPerformed
         int x, y;
         x = jTableDisciplinas.getSelectedRow();
         y = 0;
-        
+
         if (x != -1) {//-1 significa que nenhuma linha da tabela foi selecionada
             int id = Integer.valueOf((String) jTableDisciplinas.getValueAt(x, y));
             DisciplinaDAO disciplina = new DisciplinaDAO();
@@ -540,7 +540,7 @@ public class MainJFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Favor selecionar uma disciplina para ser deletada.");
         }
-        
+
         loadDisciplinasGrid();
     }//GEN-LAST:event_btnDeletarDisciplinaActionPerformed
 
@@ -567,7 +567,7 @@ public class MainJFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Favor selecionar um teste para ser deletado.");
         }
-        loadTestesGrid();        
+        loadTestesGrid();
     }//GEN-LAST:event_btnDeleteTesteActionPerformed
 
     private void btnAddMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMateriaActionPerformed
@@ -576,7 +576,7 @@ public class MainJFrame extends javax.swing.JFrame {
         try {
             m.setNome(txtMateria.getText());
             m.setSerie(cmbSerie.getSelectedIndex());
-            m.setIdDisciplina(((Disciplina) cmbDisciplina.getSelectedItem()).getId());
+            m.setidDisciplina(((Disciplina) cmbDisciplina.getSelectedItem()).getId());
             materia.insert(m);
             JOptionPane.showMessageDialog(this, "Matéria inserida com sucesso!");
         } catch (HeadlessException e) {
@@ -588,7 +588,7 @@ public class MainJFrame extends javax.swing.JFrame {
         int x, y;
         x = jTableMaterias.getSelectedRow();
         y = 0;
-        int id = Integer.parseInt((String)jTableMaterias.getValueAt(x, y));
+        int id = Integer.parseInt((String) jTableMaterias.getValueAt(x, y));
         MateriaDAO materia = new MateriaDAO();
         try {
             materia.delete(id);
@@ -604,19 +604,19 @@ public class MainJFrame extends javax.swing.JFrame {
         x = jTableMaterias.getSelectedRow();
         y = 0;
         int id = Integer.parseInt((String) jTableMaterias.getValueAt(x, y));
-        MateriaDAO materia = new MateriaDAO();        
+        MateriaDAO materia = new MateriaDAO();
         Materia m = new Materia();
         try {
             m.setNome(txtMateria.getText());
-            m.setIdDisciplina(((Disciplina)cmbDisciplina.getSelectedItem()).getId());
-            m.setSerie(cmbSerie.getSelectedIndex()); //VER SE VAI COMEÇAR EM 0 OU EM 1
+            m.setidDisciplina(((Disciplina) cmbDisciplina.getSelectedItem()).getId());
+            m.setSerie(cmbSerie.getSelectedIndex()); //VER SE VAI COMEÇAR EM 0 OU EM 1 //COMEÇA SEMPRE EM 0.
             materia.update(m);
             JOptionPane.showMessageDialog(this, "Matéria editada com sucesso!");
             loadMateriasGrid();
             txtMateria.setText("");
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Falha ao editar a matéria: " + e);
-        }        
+        }
     }//GEN-LAST:event_btnUpdateMateriaActionPerformed
 
     private void jTableMateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMateriasMouseClicked
@@ -624,7 +624,7 @@ public class MainJFrame extends javax.swing.JFrame {
         x = jTableMaterias.getSelectedRow();
         y = 0;
         int id = Integer.parseInt((String) jTableMaterias.getValueAt(x, y));
-        MateriaDAO materia = new MateriaDAO();        
+        MateriaDAO materia = new MateriaDAO();
         Materia m = materia.retrieveById(id);
         txtMateria.setText(m.getNome());
         //cmbDisciplina.setSelectedItem(m.getIdDisciplina());   saporra vai dar muito erro
@@ -727,20 +727,23 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     private void loadMateriasGrid() {
-        MateriaDAO materia = new MateriaDAO();
-        ArrayList<Materia> materiaList = materia.retrieveAll();
-        ArrayList<String> disciplinaList = materia.retrieveDisciplina();
+        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+        ArrayList<Disciplina> disciplinas = disciplinaDAO.retrieveAll();
         ArrayList<String> columns = new ArrayList<>();
         ArrayList<String[]> values = new ArrayList<>();
         columns.add("ID");
         columns.add("Nome");
         columns.add("Disciplina");
         columns.add("Série");
+
+        disciplinas.stream().forEach((Disciplina d) -> {
+            d.getMateriaList().stream().forEach((m) -> {
+                values.add(new String[]{String.valueOf(d.getId()), m.getNome(), String.valueOf(d.getNome()), String.valueOf(m.getSerie())});
+            });
+        });
+        TableModel model = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());
+        jTableMaterias.setModel(model);
         
-        //rever para inserir o nome da disciplina e nao o ID
-        materiaList.stream().forEach((m)-> {
-            values.add(new String[]{ String.valueOf(m.getId()), m.getNome(), String.valueOf(m.getIdDisciplina()), String.valueOf(m.getSerie())});
-        });       
     }
 
     private void loadDisciplinasCmb() {

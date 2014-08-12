@@ -6,6 +6,8 @@
 
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author marina.silva
@@ -14,7 +16,22 @@ public class Disciplina{
 
     int id;
     String nome;
+    ArrayList<Materia> materiaList;
 
+      public Disciplina() {
+        this.id = 0;
+        this.nome = "";
+        this.materiaList = new ArrayList<>();
+    }
+      
+    public ArrayList<Materia> getMateriaList() {
+        return materiaList;
+    }
+
+    public void setMateriaList(ArrayList<Materia> materiaList) {
+        this.materiaList = materiaList;
+    }
+   
     public int getId() {
         return id;
     }
@@ -30,10 +47,7 @@ public class Disciplina{
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public Disciplina() {
-    }
-
+    
     @Override
     public String toString() {
         return nome;

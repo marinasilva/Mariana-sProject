@@ -28,10 +28,10 @@ public class MateriaDAO {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement st = connection.prepareStatement("INSERT INTO [Materia] ([nome],[idDisciplina],[serie]) VALUES  (?, ?, ?)");
             st.setString(1, m.getNome());
-            st.setInt(2, m.getIdDisciplina());
+            st.setInt(2, m.getidDisciplina());
             st.setInt(3, m.getSerie());
             return st.executeUpdate();
-        } catch (SQLException|UnknownHostException  ex) {
+        } catch (SQLException | UnknownHostException ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
@@ -43,22 +43,23 @@ public class MateriaDAO {
             Connection connection = ConnectionFactory.getConnection();
             Statement st = connection.createStatement();
             ArrayList<Materia> materiaList = new ArrayList<>();
-            ResultSet result = st.executeQuery("SELECT [nome],[idDisciplina],[serie] FROM [Materia]");
+            ResultSet result = st.executeQuery("SELECT [id],[nome],[idDisciplina],[serie]  FROM [Materia]");
             Materia m = new Materia();
             while (result.next()) {
                 m.setNome(result.getString("nome"));
-                m.setId(result.getInt("idDisciplina"));
-                m.setId(result.getInt("serie"));
+                m.setId(result.getInt("id"));
+                m.setidDisciplina(result.getInt("idDisciplina"));
+                m.setSerie(result.getInt("serie"));
                 materiaList.add(m);
             }
             return materiaList;
-        } catch (SQLException|UnknownHostException  ex) {
+        } catch (SQLException | UnknownHostException ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
 
-    public ArrayList<String> retrieveDisciplina() {
+    public ArrayList<String> retrieveDisciplina() {//?????
 
         try {
             Connection connection = ConnectionFactory.getConnection();
@@ -69,7 +70,7 @@ public class MateriaDAO {
                 disciplinasList.add(result.getString("nome"));
             }
             return disciplinasList;
-        } catch (SQLException|UnknownHostException  ex) {
+        } catch (SQLException | UnknownHostException ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
@@ -81,7 +82,7 @@ public class MateriaDAO {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement st = connection.prepareStatement("DELETE FROM [Materia] WHERE [id] = " + id);
             return st.executeUpdate();
-        } catch (SQLException|UnknownHostException  ex) {
+        } catch (SQLException | UnknownHostException ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
@@ -96,27 +97,48 @@ public class MateriaDAO {
             Materia m = new Materia();
             m.setId(id);
             m.setNome(result.getString("nome"));
-            m.setIdDisciplina(result.getInt("idDisciplina"));
+            m.setidDisciplina(result.getInt("idDisciplina"));
             m.setSerie(result.getInt("serie"));
             return m;
-        } catch (SQLException|UnknownHostException  ex) {
+        } catch (SQLException | UnknownHostException ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
-    
-    public int update(Materia m){
-    
+
+    public int update(Materia m) {
+
         try {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement st = connection.prepareStatement("UPDATE [Materia] SET [nome] = ?, [idDisciplina] = ?, [serie] = ? WHERE [id] = " + m.getId());
             st.setString(1, m.getNome());
-            st.setInt(2, m.getIdDisciplina());
+            st.setInt(2, m.getidDisciplina());
             st.setInt(3, m.getSerie());
             return st.executeUpdate();
-        } catch (SQLException|UnknownHostException  ex) {
-             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | UnknownHostException ex) {
+            Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
+        }
+    }
+
+    public ArrayList<Materia> retrieveAllByDisciplina(int id) {
+        try {
+            Connection connection = ConnectionFactory.getConnection();
+            Statement st = connection.createStatement();
+            ArrayList<Materia> materiaList = new ArrayList<>();
+            ResultSet result = st.executeQuery("SELECT [id],[nome],[idDisciplina],[serie]  FROM [Materia] where idDisciplina = " + id);
+            Materia m = new Materia();
+            while (result.next()) {
+                m.setNome(result.getString("nome"));
+                m.setId(result.getInt("id"));
+                m.setidDisciplina(result.getInt("idDisciplina"));
+                m.setSerie(result.getInt("serie"));
+                materiaList.add(m);
+            }
+            return materiaList;
+        } catch (SQLException | UnknownHostException ex) {
+            Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 

@@ -12,10 +12,10 @@ package Model;
  */
 public class Materia {
 
-    int id;
-    String nome;
-    int idDisciplina;
-    int serie;
+  int id;
+  String nome;
+  int idDisciplina;
+  int serie;
 
     public int getId() {
         return id;
@@ -33,11 +33,11 @@ public class Materia {
         this.nome = nome;
     }
 
-    public int getIdDisciplina() {
+    public int getidDisciplina() {
         return idDisciplina;
     }
 
-    public void setIdDisciplina(int idDisciplina) {
+    public void setidDisciplina(int idDisciplina) {
         this.idDisciplina = idDisciplina;
     }
 
