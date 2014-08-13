@@ -15,7 +15,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-
+/**
+ *
+ * @author Sammy Guergachi <sguergachi at gmail.com>
+ */
 public class AddTesteJFrame extends javax.swing.JFrame {
 
     /**
