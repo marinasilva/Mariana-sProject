@@ -7,6 +7,7 @@
 package DAL;
 
 import Model.Questao;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +38,7 @@ public class QuestaoDAO {
             st.setString(7, q.getResposta4());
             st.setInt(8, q.getGabarito());
             return st.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
              Logger.getLogger(QuestaoDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
@@ -64,7 +65,7 @@ public class QuestaoDAO {
                 questaoList.add(q);
             }
             return questaoList;
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(QuestaoDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }

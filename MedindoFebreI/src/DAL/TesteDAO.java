@@ -6,6 +6,7 @@
 package DAL;
 
 import Model.Teste;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +31,7 @@ public class TesteDAO {
             st.setDate(2, t.getDataGeracao());
             st.setInt(3, t.getNumeroQuestoes());
             return st.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(TesteDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
@@ -52,7 +53,7 @@ public class TesteDAO {
             }
             return testeList;
 
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException ex) {
             Logger.getLogger(TesteDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
@@ -64,12 +65,9 @@ public class TesteDAO {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement st = connection.prepareStatement("DELETE FROM [Teste] WHERE [id] = "+ id);
             return st.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(TesteDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
-    
-    
-
 }
