@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Model;
 
 import java.sql.Date;
@@ -13,9 +12,9 @@ import java.sql.Date;
  * @author marina.silva
  */
 public class Teste {
-    
+
     int id;
-    int idDisciplina;
+    Disciplina disciplina;
     Date dataGeracao;
     int numeroQuestoes;
 
@@ -27,12 +26,12 @@ public class Teste {
         this.id = id;
     }
 
-    public int getIdDisciplina() {
-        return idDisciplina;
+    public Disciplina getDisciplina() {
+        return disciplina;
     }
 
-    public void setIdDisciplina(int idDisciplina) {
-        this.idDisciplina = idDisciplina;
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
     }
 
     public Date getDataGeracao() {
@@ -52,5 +51,5 @@ public class Teste {
     }
 
     public Teste() {
-    }   
+    }
 }

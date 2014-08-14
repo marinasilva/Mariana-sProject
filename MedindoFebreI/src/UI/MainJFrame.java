@@ -478,11 +478,12 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddTesteActionPerformed
 
     private void btnUpdateTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTesteActionPerformed
+        
         AddTesteJFrame editTeste = new AddTesteJFrame();
         editTeste.setTitle("Edição de Teste");
         editTeste.setLocationRelativeTo(this);
         editTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        editTeste.setVisible(true);
+        editTeste.setVisible(true);        
     }//GEN-LAST:event_btnUpdateTesteActionPerformed
 
     private void btnAddDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDisciplinaActionPerformed
@@ -702,7 +703,7 @@ public class MainJFrame extends javax.swing.JFrame {
         columns.add("Disciplina");
 
         testesList.stream().forEach((c) -> {
-            values.add(new String[]{"Teste " + String.valueOf(c.getId()), String.valueOf(c.getNumeroQuestoes()), format.format(c.getDataGeracao().getTime()), String.valueOf(c.getIdDisciplina())});
+            values.add(new String[]{"Teste " + String.valueOf(c.getId()), String.valueOf(c.getNumeroQuestoes()), format.format(c.getDataGeracao().getTime()), String.valueOf(c.getDisciplina().getNome())});
         });
 
         TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());

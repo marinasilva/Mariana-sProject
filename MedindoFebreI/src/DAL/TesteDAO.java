@@ -5,6 +5,7 @@
  */
 package DAL;
 
+import Model.Disciplina;
 import Model.Teste;
 import java.net.UnknownHostException;
 import java.sql.Connection;
@@ -27,7 +28,7 @@ public class TesteDAO {
         try {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement st = connection.prepareStatement("INSERT INTO [Teste] ([idDisciplina],[dataGeracao],[numeroQuestoes]) VALUES (?, ?, ?)");
-            st.setInt(1, t.getIdDisciplina());
+            st.setInt(1, t.getDisciplina().getId());
             st.setDate(2, t.getDataGeracao());
             st.setInt(3, t.getNumeroQuestoes());
             return st.executeUpdate();
@@ -42,11 +43,15 @@ public class TesteDAO {
             Connection connection = ConnectionFactory.getConnection();
             Statement st = connection.createStatement();
             ArrayList<Teste> testeList = new ArrayList<>();
-            ResultSet result = st.executeQuery("SELECT [id],[idDisciplina],[dataGeracao],[numeroQuestoes] FROM [Teste]");
+            ResultSet result = st.executeQuery("SELECT Disciplina.nome, Teste.id, Teste.dataGeracao, Teste.idDisciplina, Teste.numeroQuestoes FROM Disciplina INNER JOIN\n" +
+"                      Teste ON Disciplina.id = Teste.idDisciplina");
             Teste t = new Teste();
+            Disciplina d = new Disciplina();
             while (result.next()) {
                 t.setId(result.getInt("id"));
-                t.setIdDisciplina(result.getInt("idDisciplina"));
+                d.setId(result.getInt("idDisciplina"));
+                d.setNome(result.getString("nome"));                
+                t.setDisciplina(d);
                 t.setNumeroQuestoes(result.getInt("numeroQuestoes"));
                 t.setDataGeracao(result.getDate("dataGeracao"));
                 testeList.add(t);
@@ -57,13 +62,13 @@ public class TesteDAO {
             Logger.getLogger(TesteDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-    }
+    }    
     
     public int delete(int id){
     
         try {
             Connection connection = ConnectionFactory.getConnection();
-            PreparedStatement st = connection.prepareStatement("DELETE FROM [Teste] WHERE [id] = "+ id);
+            PreparedStatement st = connection.prepareStatement("DELETE FROM [Teste] WHERE [id] = " + id);
             return st.executeUpdate();
         } catch (SQLException|UnknownHostException  ex) {
             Logger.getLogger(TesteDAO.class.getName()).log(Level.SEVERE, null, ex);
