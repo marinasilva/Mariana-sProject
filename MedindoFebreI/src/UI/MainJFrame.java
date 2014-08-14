@@ -12,6 +12,7 @@ import Model.Disciplina;
 import Model.Materia;
 import Model.Teste;
 import java.awt.HeadlessException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -34,7 +35,7 @@ public class MainJFrame extends javax.swing.JFrame {
         loadMateriasGrid();
         loadDisciplinasCmb();
         loadSerieCmb();
-        this.setLocationRelativeTo(null); 
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -478,12 +479,21 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddTesteActionPerformed
 
     private void btnUpdateTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTesteActionPerformed
-        
-        AddTesteJFrame editTeste = new AddTesteJFrame();
-        editTeste.setTitle("Edição de Teste");
-        editTeste.setLocationRelativeTo(this);
-        editTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        editTeste.setVisible(true);        
+        int x, y;
+        x = jTableTestes.getSelectedRow();
+        TesteDAO teste = new TesteDAO();
+        Teste t = teste.retrieveByID(Integer.parseInt((String) jTableTestes.getValueAt(x, 0)));
+
+        if (x != -1) {
+            AddTesteJFrame editTeste = new AddTesteJFrame(t);
+            editTeste.setVisible(true);
+            editTeste.setTitle("Edição de Teste");
+            editTeste.setLocationRelativeTo(this);
+            editTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Favor selecionar um teste para editar!");
+        }
+
     }//GEN-LAST:event_btnUpdateTesteActionPerformed
 
     private void btnAddDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDisciplinaActionPerformed
@@ -697,17 +707,21 @@ public class MainJFrame extends javax.swing.JFrame {
         ArrayList<String> columns = new ArrayList<>();
         ArrayList<String[]> values = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        columns.add("ID");
         columns.add("Nome");
         columns.add("Número de Questões");
         columns.add("Data de Geração");
         columns.add("Disciplina");
 
         testesList.stream().forEach((c) -> {
-            values.add(new String[]{"Teste " + String.valueOf(c.getId()), String.valueOf(c.getNumeroQuestoes()), format.format(c.getDataGeracao().getTime()), String.valueOf(c.getDisciplina().getNome())});
+            values.add(new String[]{String.valueOf(c.getId()), "Teste " + String.valueOf(c.getId()), String.valueOf(c.getNumeroQuestoes()), format.format(c.getDataGeracao().getTime()), String.valueOf(c.getDisciplina().getNome())});
         });
 
         TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());
+
         jTableTestes.setModel(tableModel);
+        jTableTestes.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableTestes.getColumnModel().getColumn(0).setMaxWidth(0);
     }
 
     private void loadDisciplinasGrid() {
@@ -743,7 +757,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
         TableModel model = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());
         jTableMaterias.setModel(model);
-        
+
     }
 
     private void loadDisciplinasCmb() {
