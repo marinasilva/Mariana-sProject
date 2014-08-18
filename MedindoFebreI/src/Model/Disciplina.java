@@ -18,6 +18,11 @@ public class Disciplina{
     String nome;
     ArrayList<Materia> materiaList;
 
+    public Disciplina(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
       public Disciplina() {
         this.id = 0;
         this.nome = "";

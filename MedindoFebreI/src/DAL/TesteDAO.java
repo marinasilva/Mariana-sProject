@@ -75,4 +75,23 @@ public class TesteDAO {
             return -1;
         }
     }
+    
+    public Teste retrieveByID(int id){
+        try {
+            Connection connection = ConnectionFactory.getConnection();
+            Statement st = connection.createStatement();
+            ResultSet result = st.executeQuery("SELECT dbo.Teste.idDisciplina, dbo.Teste.dataGeracao, dbo.Teste.numeroQuestoes, dbo.Disciplina.nome\n" +
+                "FROM dbo.Disciplina INNER JOIN\n" +
+                " dbo.Teste ON dbo.Disciplina.id = dbo.Teste.idDisciplina where dbo.Teste.id = " + id);
+            Teste t = new Teste();
+            Disciplina d = new Disciplina();
+            t.setDisciplina(new Disciplina(result.getInt("idDisciplina"), result.getString("nome")));
+            t.setNumeroQuestoes(result.getInt("numeroQuestoes"));
+            t.setDataGeracao(result.getDate("dataGeracao"));  
+            return t;
+        } catch (UnknownHostException | SQLException e) {
+            Logger.getLogger(TesteDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
 }
