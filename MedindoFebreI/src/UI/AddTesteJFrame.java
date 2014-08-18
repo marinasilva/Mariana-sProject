@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package UI;
 
 import DAL.DisciplinaDAO;
@@ -16,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-
 public class AddTesteJFrame extends javax.swing.JFrame {
 
     /**
@@ -25,8 +23,16 @@ public class AddTesteJFrame extends javax.swing.JFrame {
     public AddTesteJFrame() {
         initComponents();
         loadDisciplinas();
+    }
+
+    public AddTesteJFrame(Teste t) {
+        this.txtNumeroQuestoes.setText(String.valueOf(t.getNumeroQuestoes()));
+        loadDisciplinas();
+        this.cmbDisciplina.setSelectedItem(t.getDisciplina().getNome());
         
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -139,17 +145,21 @@ public class AddTesteJFrame extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         Teste t = new Teste();
         TesteDAO teste = new TesteDAO();
-        try {            
-            t.setDisciplina(((Disciplina)cmbDisciplina.getSelectedItem())); //CONFERIR
+        try {
+            t.setDisciplina(((Disciplina) cmbDisciplina.getSelectedItem())); //CONFERIR
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             System.out.println(txtDataGeracao.getText());
-            t.setDataGeracao(new java.sql.Date(format.parse(txtDataGeracao.getText()).getTime())); 
+            t.setDataGeracao(new java.sql.Date(format.parse(txtDataGeracao.getText()).getTime()));
             t.setNumeroQuestoes(Integer.parseInt(txtNumeroQuestoes.getText()));
             teste.insert(t);
             JOptionPane.showMessageDialog(this, "Teste inserido com sucesso!!");
             
             this.dispose();
+<<<<<<< HEAD
         } catch (HeadlessException | NumberFormatException | ParseException e) {
+=======
+        } catch (ParseException | NumberFormatException | HeadlessException e) {
+>>>>>>> origin/master
             JOptionPane.showMessageDialog(this, "Falha ao adicionar novo teste: " + e);
         }
     }//GEN-LAST:event_btnAddActionPerformed
@@ -200,6 +210,6 @@ public class AddTesteJFrame extends javax.swing.JFrame {
         disciplinaList.stream().forEach((disciplina1) -> {
             cmbDisciplina.addItem(disciplina1);
         });
-        
+
     }
 }
