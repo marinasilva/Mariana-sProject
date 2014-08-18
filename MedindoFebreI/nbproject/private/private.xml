@@ -3,10 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/DAL/ConnectionFactory.java</file>
-            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/DAL/TesteDAO.java</file>
-            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/UI/AddTesteJFrame.java</file>
-            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/UI/MainJFrame.java</file>
+            <file>file:/C:/Users/luis.moraes/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/UI/AddTesteJFrame.java</file>
+            <file>file:/C:/Users/luis.moraes/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/DAL/QuestaoDAO.java</file>
+            <file>file:/C:/Users/luis.moraes/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/Model/Questao.java</file>
+            <file>file:/C:/Users/luis.moraes/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/DAL/DisciplinaDAO.java</file>
+            <file>file:/C:/Users/luis.moraes/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/Model/Materia.java</file>
+            <file>file:/C:/Users/luis.moraes/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/DAL/ConnectionFactory.java</file>
+            <file>file:/C:/Users/luis.moraes/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/DAL/TesteDAO.java</file>
+            <file>file:/C:/Users/luis.moraes/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/Model/Disciplina.java</file>
         </group>
     </open-files>
 </project-private>
