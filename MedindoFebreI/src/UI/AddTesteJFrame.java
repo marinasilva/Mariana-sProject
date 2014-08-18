@@ -155,11 +155,7 @@ public class AddTesteJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Teste inserido com sucesso!!");
             
             this.dispose();
-<<<<<<< HEAD
         } catch (HeadlessException | NumberFormatException | ParseException e) {
-=======
-        } catch (ParseException | NumberFormatException | HeadlessException e) {
->>>>>>> origin/master
             JOptionPane.showMessageDialog(this, "Falha ao adicionar novo teste: " + e);
         }
     }//GEN-LAST:event_btnAddActionPerformed
