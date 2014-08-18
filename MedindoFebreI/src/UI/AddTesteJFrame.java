@@ -104,7 +104,7 @@ public class AddTesteJFrame extends javax.swing.JFrame {
                 .addGap(0, 9, Short.MAX_VALUE))
         );
 
-        btnAdd.setText("Adicionar");
+        btnAdd.setText("Gerar");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
@@ -138,6 +138,8 @@ public class AddTesteJFrame extends javax.swing.JFrame {
                     .addComponent(btnAdd)
                     .addComponent(btnCancel)))
         );
+
+        btnAdd.getAccessibleContext().setAccessibleName("Gerar");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
