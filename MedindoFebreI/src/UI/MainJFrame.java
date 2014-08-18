@@ -12,7 +12,6 @@ import Model.Disciplina;
 import Model.Materia;
 import Model.Teste;
 import java.awt.HeadlessException;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
