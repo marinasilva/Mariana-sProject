@@ -6,6 +6,7 @@
 package Model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -17,6 +18,14 @@ public class Teste {
     Disciplina disciplina;
     Date dataGeracao;
     int numeroQuestoes;
+
+    public Teste() {
+        this.id = 0;
+        this.disciplina = new Disciplina();
+        this.dataGeracao = Date.valueOf(LocalDate.MIN);
+        this.numeroQuestoes = 0;
+    }
+    
 
     public int getId() {
         return id;
@@ -50,6 +59,4 @@ public class Teste {
         this.numeroQuestoes = numeroQuestoes;
     }
 
-    public Teste() {
-    }
 }
