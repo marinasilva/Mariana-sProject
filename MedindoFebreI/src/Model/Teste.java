@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author marina.silva
+ * @author luis fernando
  */
 public class Teste {
 
@@ -19,7 +19,8 @@ public class Teste {
     Date dataGeracao;
     int numeroQuestoes;
 
-    public Teste() {
+    public Teste() { 
+        
         this.id = 0;
         this.disciplina = new Disciplina();
         this.dataGeracao = Date.valueOf(LocalDate.MIN);

@@ -11,7 +11,6 @@ package Model;
  * @author marina.silva
  */
 public class Questao {
-    
     int id;
     int bimestre;
     int idMateria;
