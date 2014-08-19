@@ -26,13 +26,13 @@ public class AddTesteJFrame extends javax.swing.JFrame {
     }
 
     public AddTesteJFrame(Teste t) {
-        this.txtNumeroQuestoes.setText(String.valueOf(t.getNumeroQuestoes()));
+        initComponents();
+        btnAdd.setText("Editar");
+        txtNumeroQuestoes.setText(String.valueOf(t.getNumeroQuestoes()));
         loadDisciplinas();
-        this.cmbDisciplina.setSelectedItem(t.getDisciplina().getNome());
-        
+        cmbDisciplina.setSelectedItem(t.getDisciplina().getNome());
+        txtDataGeracao.setText(new SimpleDateFormat("dd/MM/yyyy").format(t.getDataGeracao())); //DATA, eu te odeio!! Mas eu consegui.. #CHUUUPAA
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -155,7 +155,7 @@ public class AddTesteJFrame extends javax.swing.JFrame {
             t.setNumeroQuestoes(Integer.parseInt(txtNumeroQuestoes.getText()));
             teste.insert(t);
             JOptionPane.showMessageDialog(this, "Teste inserido com sucesso!!");
-            
+
             this.dispose();
         } catch (HeadlessException | NumberFormatException | ParseException e) {
             JOptionPane.showMessageDialog(this, "Falha ao adicionar novo teste: " + e);
@@ -210,4 +210,5 @@ public class AddTesteJFrame extends javax.swing.JFrame {
         });
 
     }
+
 }
