@@ -476,42 +476,46 @@ public class MainJFrame extends javax.swing.JFrame {
         AddTesteJFrame addTeste = new AddTesteJFrame();
         addTeste.setLocationRelativeTo(this);
         addTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        addTeste.addWindowListener(new WindowAdapter()
-        {
-            
+        addTeste.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosed(WindowEvent e)
-            {
-               //Isso é chamado de classe anonima em Java.
-               //Em C# é tal como os eventos, aquele que tu da dois clicks no botão e já cria um metodo.
-               //Oque ele fez aqui foi adicionar um evento que sera chamado quando a janela fechar(windowClosing) ha ha ha
-               //Não se assuste com a sintaxe, pq eu me assustei quando vi ahuehae. Depois eu te explico melhor ela...
-               //Enfim, aqui tu pode chamar o seu update do grid. 
-                JOptionPane.showMessageDialog(rootPane, "Oi :3");
-               
+            public void windowClosed(WindowEvent e) {
+                //Isso é chamado de classe anonima em Java.
+                //Em C# é tal como os eventos, aquele que tu da dois clicks no botão e já cria um metodo.
+                //Oque ele fez aqui foi adicionar um evento que sera chamado quando a janela fechar(windowClosing) ha ha ha
+                //Não se assuste com a sintaxe, pq eu me assustei quando vi ahuehae. Depois eu te explico melhor ela...
+                //Enfim, aqui tu pode chamar o seu update do grid. 
+                loadTestesGrid();
+
             }
         });
         addTeste.setVisible(true);
         /*addTeste.addWindowListener( new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent we) {
-                        showDialog(f);
-                        System.exit(0);
-                    }
-                } );*/
+         @Override
+         public void windowClosing(WindowEvent we) {
+         showDialog(f);
+         System.exit(0);
+         }
+         } );*/
     }//GEN-LAST:event_btnAddTesteActionPerformed
 
     private void btnUpdateTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTesteActionPerformed
         int x, y;
         x = jTableTestes.getSelectedRow();
         TesteDAO teste = new TesteDAO();
-        if (x != -1) {
+        if (x != -1) 
+        {            
             Teste t = teste.retrieveByID(Integer.parseInt((String) jTableTestes.getValueAt(x, 0)));
             AddTesteJFrame editTeste = new AddTesteJFrame(t);
             editTeste.setVisible(true);
             editTeste.setTitle("Edição de Teste");
             editTeste.setLocationRelativeTo(this);
             editTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            editTeste.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadTestesGrid();
+                }
+            });
         } else {
             JOptionPane.showMessageDialog(this, "Favor selecionar um teste para editar!");
         }
@@ -742,8 +746,8 @@ public class MainJFrame extends javax.swing.JFrame {
         TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());
 
         jTableTestes.setModel(tableModel);
-        jTableTestes.getColumnModel().getColumn(0).setMinWidth(0);
-        jTableTestes.getColumnModel().getColumn(0).setMaxWidth(0);
+        //jTableTestes.getColumnModel().getColumn(0).setMinWidth(0);
+        //jTableTestes.getColumnModel().getColumn(0).setMaxWidth(0);
     }
 
     private void loadDisciplinasGrid() {
