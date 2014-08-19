@@ -12,6 +12,8 @@ import Model.Disciplina;
 import Model.Materia;
 import Model.Teste;
 import java.awt.HeadlessException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -475,15 +477,21 @@ public class MainJFrame extends javax.swing.JFrame {
         addTeste.setLocationRelativeTo(this);
         addTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addTeste.setVisible(true);
+        /*addTeste.addWindowListener( new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent we) {
+                        showDialog(f);
+                        System.exit(0);
+                    }
+                } );*/
     }//GEN-LAST:event_btnAddTesteActionPerformed
 
     private void btnUpdateTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTesteActionPerformed
         int x, y;
         x = jTableTestes.getSelectedRow();
         TesteDAO teste = new TesteDAO();
-        Teste t = teste.retrieveByID(Integer.parseInt((String) jTableTestes.getValueAt(x, 0)));
-
         if (x != -1) {
+            Teste t = teste.retrieveByID(Integer.parseInt((String) jTableTestes.getValueAt(x, 0)));
             AddTesteJFrame editTeste = new AddTesteJFrame(t);
             editTeste.setVisible(true);
             editTeste.setTitle("Edição de Teste");
