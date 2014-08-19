@@ -12,6 +12,8 @@ import Model.Disciplina;
 import Model.Materia;
 import Model.Teste;
 import java.awt.HeadlessException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -474,6 +476,21 @@ public class MainJFrame extends javax.swing.JFrame {
         AddTesteJFrame addTeste = new AddTesteJFrame();
         addTeste.setLocationRelativeTo(this);
         addTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addTeste.addWindowListener(new WindowAdapter()
+        {
+            
+            @Override
+            public void windowClosed(WindowEvent e)
+            {
+               //Isso é chamado de classe anonima em Java.
+               //Em C# é tal como os eventos, aquele que tu da dois clicks no botão e já cria um metodo.
+               //Oque ele fez aqui foi adicionar um evento que sera chamado quando a janela fechar(windowClosing) ha ha ha
+               //Não se assuste com a sintaxe, pq eu me assustei quando vi ahuehae. Depois eu te explico melhor ela...
+               //Enfim, aqui tu pode chamar o seu update do grid. 
+                JOptionPane.showMessageDialog(rootPane, "Oi :3");
+               
+            }
+        });
         addTeste.setVisible(true);
     }//GEN-LAST:event_btnAddTesteActionPerformed
 
