@@ -153,9 +153,11 @@ public class AddTesteJFrame extends javax.swing.JFrame {
             System.out.println(txtDataGeracao.getText());
             t.setDataGeracao(new java.sql.Date(format.parse(txtDataGeracao.getText()).getTime()));
             t.setNumeroQuestoes(Integer.parseInt(txtNumeroQuestoes.getText()));
-            teste.insert(t);
-            JOptionPane.showMessageDialog(this, "Teste inserido com sucesso!!");
-
+            if (teste.insert(t) != -1) {
+                JOptionPane.showMessageDialog(this, "Teste inserido com sucesso!!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Falha ao inserir.");
+            }
             this.dispose();
         } catch (HeadlessException | NumberFormatException | ParseException e) {
             JOptionPane.showMessageDialog(this, "Falha ao adicionar novo teste: " + e);
