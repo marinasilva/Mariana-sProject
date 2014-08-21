@@ -6,6 +6,7 @@
 package DAL;
 
 import Model.Disciplina;
+import Model.Materia;
 import Model.Teste;
 import java.net.UnknownHostException;
 import java.sql.Connection;
@@ -43,21 +44,28 @@ public class TesteDAO {
             Connection connection = ConnectionFactory.getConnection();
             Statement st = connection.createStatement();
             ArrayList<Teste> testeList = new ArrayList<>();
-            ResultSet result = st.executeQuery("SELECT Disciplina.nome, Teste.id, Teste.dataGeracao, Teste.idDisciplina, Teste.numeroQuestoes FROM Disciplina INNER JOIN\n"
-                    + "                      Teste ON Disciplina.id = Teste.idDisciplina");
+            ResultSet result = st.executeQuery("SELECT dbo.Teste.id, dbo.Teste.idMateria, dbo.Teste.dataGeracao, dbo.Teste.numeroQuestoes, dbo.Materia.nome, dbo.Materia.idDisciplina, dbo.Materia.serie,  dbo.Disciplina.nome AS Expr1\n"
+                    + "FROM dbo.Disciplina INNER JOIN\n"
+                    + " dbo.Materia ON dbo.Disciplina.id = dbo.Materia.idDisciplina INNER JOIN\n"
+                    + " dbo.Teste ON dbo.Disciplina.id = dbo.Teste.idMateria");
             Teste t = new Teste();
             Disciplina d = new Disciplina();
+            Materia m = new Materia();
             while (result.next()) {
-                t.setId(result.getInt("id"));
-                d.setId(result.getInt("idDisciplina"));
-                d.setNome(result.getString("nome"));
+                t.setId(result.getInt(1));
+                d.setId(result.getInt(6));
+                d.setNome(result.getString(8));
                 t.setDisciplina(d);
-                t.setNumeroQuestoes(result.getInt("numeroQuestoes"));
-                t.setDataGeracao(result.getDate("dataGeracao"));
+                m.setId(result.getInt(2));
+                m.setNome(result.getString(5));
+                m.setSerie(result.getInt(7));
+                m.setidDisciplina(result.getInt(6));
+                t.setMateria(m);
+                t.setNumeroQuestoes(result.getInt(4));
+                t.setDataGeracao(result.getDate(3));
                 testeList.add(t);
             }
             return testeList;
-
         } catch (SQLException | UnknownHostException ex) {
             Logger.getLogger(TesteDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -76,19 +84,22 @@ public class TesteDAO {
         }
     }
 
-    public Teste retrieveByID(int id) {
+    public Teste retrieveByID(int id) { 
         try {
             Connection connection = ConnectionFactory.getConnection();
             Statement st = connection.createStatement();
-            ResultSet result = st.executeQuery("SELECT dbo.Teste.idDisciplina, dbo.Teste.dataGeracao, dbo.Teste.numeroQuestoes, dbo.Disciplina.nome\n"
+            ResultSet result = st.executeQuery("SELECT dbo.Teste.id, dbo.Teste.idMateria, dbo.Teste.dataGeracao, dbo.Teste.numeroQuestoes, dbo.Materia.nome, dbo.Materia.idDisciplina, dbo.Materia.serie,  dbo.Disciplina.nome AS Expr1\n"
                     + "FROM dbo.Disciplina INNER JOIN\n"
-                    + " dbo.Teste ON dbo.Disciplina.id = dbo.Teste.idDisciplina where dbo.Teste.id = " + id);
+                    + " dbo.Materia ON dbo.Disciplina.id = dbo.Materia.idDisciplina INNER JOIN\n"
+                    + " dbo.Teste ON dbo.Disciplina.id = dbo.Teste.idMateria where dbo.Teste.id = " + id);
             result.next();
             Teste t = new Teste();
             Disciplina d = new Disciplina();
-            t.setDisciplina(new Disciplina(result.getInt("idDisciplina"), result.getString("nome")));
-            t.setNumeroQuestoes(result.getInt("numeroQuestoes"));
-            t.setDataGeracao(result.getDate("dataGeracao"));
+            Materia m = new Materia();
+            t.setDisciplina(new Disciplina(result.getInt(6), result.getString(8)));
+            t.setMateria(new Materia(result.getInt(2), result.getString(5), result.getInt(6), result.getInt(7)));
+            t.setNumeroQuestoes(result.getInt(4));
+            t.setDataGeracao(result.getDate(3));
             t.setId(id);
             return t;
         } catch (UnknownHostException | SQLException e) {
@@ -97,11 +108,11 @@ public class TesteDAO {
         }
     }
 
-    public int update(Teste t) {
+    public int update(Teste t) { 
         try {
             Connection connection = ConnectionFactory.getConnection();
-            PreparedStatement st = connection.prepareStatement("UPDATE [Teste] SET [idDisciplina] = ?,[dataGeracao] = ?,[numeroQuestoes] = ? WHERE [id] = " + t.getId());
-            st.setInt(1, t.getDisciplina().getId());
+            PreparedStatement st = connection.prepareStatement("UPDATE [Teste] SET [idMateria] = ?,[dataGeracao] = ?,[numeroQuestoes] = ? WHERE [id] = " + t.getId());
+            st.setInt(1, t.getMateria().getId());
             st.setDate(2, t.getDataGeracao());
             st.setInt(3, t.getNumeroQuestoes());
             return st.executeUpdate();
