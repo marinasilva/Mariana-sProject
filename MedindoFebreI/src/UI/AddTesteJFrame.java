@@ -20,10 +20,12 @@ import javax.swing.JOptionPane;
 public class AddTesteJFrame extends javax.swing.JFrame {
 
     int insert;
+
     public AddTesteJFrame() {
         initComponents();
         loadDisciplinas();
         insert = 1;
+        cmbMateria.removeAllItems();
     }
 
     public AddTesteJFrame(Teste t) {
@@ -34,6 +36,7 @@ public class AddTesteJFrame extends javax.swing.JFrame {
         cmbDisciplina.setSelectedItem(t.getDisciplina().getNome());
         txtDataGeracao.setText(new SimpleDateFormat("dd/MM/yyyy").format(t.getDataGeracao())); //DATA, eu te odeio!! Mas eu consegui.. #CHUUUPAA
         insert = 2;
+        cmbMateria.removeAllItems();
     }
 
     /**
@@ -59,6 +62,11 @@ public class AddTesteJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Adição de Testes");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Teste", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(153, 51, 255))); // NOI18N
 
@@ -176,7 +184,7 @@ public class AddTesteJFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Teste inserido com sucesso!!");
                 } else {
                     JOptionPane.showMessageDialog(this, "Falha ao inserir.");
-                }                
+                }
             } catch (HeadlessException | NumberFormatException | ParseException e) {
                 JOptionPane.showMessageDialog(this, "Falha ao adicionar novo teste: " + e);
             }
@@ -187,7 +195,7 @@ public class AddTesteJFrame extends javax.swing.JFrame {
                 t.setNumeroQuestoes(Integer.parseInt(txtNumeroQuestoes.getText()));
                 if (teste.update(t) != -1) {
                     JOptionPane.showMessageDialog(this, "Teste editado com sucesso!");
-                } else{
+                } else {
                     JOptionPane.showMessageDialog(this, "Falha ao editar teste.");
                 }
             } catch (NumberFormatException | ParseException e) {
@@ -198,9 +206,16 @@ public class AddTesteJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void cmbDisciplinaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDisciplinaItemStateChanged
-        Disciplina d  = (Disciplina) cmbDisciplina.getSelectedItem();
-        loadMaterias(d.getId());
+        if (cmbDisciplina.getItemCount() != 0) {
+            Disciplina d = (Disciplina) cmbDisciplina.getSelectedItem();
+            loadMaterias(d.getId());
+        }
     }//GEN-LAST:event_cmbDisciplinaItemStateChanged
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        Disciplina d = (Disciplina) cmbDisciplina.getSelectedItem();
+        loadMaterias(d.getId());
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -249,14 +264,16 @@ public class AddTesteJFrame extends javax.swing.JFrame {
         ArrayList<Disciplina> disciplinaList = disciplina.retrieveAll();
         disciplinaList.stream().forEach((disciplina1) -> {
             cmbDisciplina.addItem(disciplina1);
-        });        
+        });
     }
 
     private void loadMaterias(int id) {
         cmbMateria.removeAllItems();
         MateriaDAO materia = new MateriaDAO();
         ArrayList<Materia> materiaList = materia.retrieveAllByDisciplina(id);
-        //materiaList.
+        materiaList.stream().forEach((materia1) -> {
+            cmbMateria.addItem(materia1);
+        });
     }
 
 }
