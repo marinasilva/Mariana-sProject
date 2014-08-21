@@ -6,8 +6,10 @@
 package UI;
 
 import DAL.DisciplinaDAO;
+import DAL.MateriaDAO;
 import DAL.TesteDAO;
 import Model.Disciplina;
+import Model.Materia;
 import Model.Teste;
 import java.awt.HeadlessException;
 import java.text.ParseException;
@@ -17,12 +19,11 @@ import javax.swing.JOptionPane;
 
 public class AddTesteJFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AddTesteJFrame
-     */
+    int insert;
     public AddTesteJFrame() {
         initComponents();
         loadDisciplinas();
+        insert = 1;
     }
 
     public AddTesteJFrame(Teste t) {
@@ -32,6 +33,7 @@ public class AddTesteJFrame extends javax.swing.JFrame {
         loadDisciplinas();
         cmbDisciplina.setSelectedItem(t.getDisciplina().getNome());
         txtDataGeracao.setText(new SimpleDateFormat("dd/MM/yyyy").format(t.getDataGeracao())); //DATA, eu te odeio!! Mas eu consegui.. #CHUUUPAA
+        insert = 2;
     }
 
     /**
@@ -50,6 +52,8 @@ public class AddTesteJFrame extends javax.swing.JFrame {
         cmbDisciplina = new javax.swing.JComboBox();
         txtDataGeracao = new javax.swing.JTextField();
         txtNumeroQuestoes = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cmbMateria = new javax.swing.JComboBox();
         btnAdd = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
 
@@ -65,6 +69,15 @@ public class AddTesteJFrame extends javax.swing.JFrame {
         jLabel3.setText("Número de questões:");
 
         cmbDisciplina.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDisciplina.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbDisciplinaItemStateChanged(evt);
+            }
+        });
+
+        jLabel4.setText("Matéria:");
+
+        cmbMateria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -84,7 +97,11 @@ public class AddTesteJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNumeroQuestoes)))
+                        .addComponent(txtNumeroQuestoes))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -95,13 +112,17 @@ public class AddTesteJFrame extends javax.swing.JFrame {
                     .addComponent(cmbDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(cmbMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtDataGeracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtNumeroQuestoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         btnAdd.setText("Gerar");
@@ -133,13 +154,11 @@ public class AddTesteJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnCancel)))
         );
-
-        btnAdd.getAccessibleContext().setAccessibleName("Gerar");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -147,22 +166,41 @@ public class AddTesteJFrame extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         Teste t = new Teste();
         TesteDAO teste = new TesteDAO();
-        try {
-            t.setDisciplina(((Disciplina) cmbDisciplina.getSelectedItem())); //CONFERIR
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            System.out.println(txtDataGeracao.getText());
-            t.setDataGeracao(new java.sql.Date(format.parse(txtDataGeracao.getText()).getTime()));
-            t.setNumeroQuestoes(Integer.parseInt(txtNumeroQuestoes.getText()));
-            if (teste.insert(t) != -1) {
-                JOptionPane.showMessageDialog(this, "Teste inserido com sucesso!!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Falha ao inserir.");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        if (insert == 1) { //valor 1 para inserir novo teste, valor 2 para editar
+            try {
+                t.setDisciplina(((Disciplina) cmbDisciplina.getSelectedItem())); //CONFERIR
+                t.setDataGeracao(new java.sql.Date(format.parse(txtDataGeracao.getText()).getTime()));
+                t.setNumeroQuestoes(Integer.parseInt(txtNumeroQuestoes.getText()));
+                if (teste.insert(t) != -1) {
+                    JOptionPane.showMessageDialog(this, "Teste inserido com sucesso!!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Falha ao inserir.");
+                }                
+            } catch (HeadlessException | NumberFormatException | ParseException e) {
+                JOptionPane.showMessageDialog(this, "Falha ao adicionar novo teste: " + e);
             }
-            this.dispose();
-        } catch (HeadlessException | NumberFormatException | ParseException e) {
-            JOptionPane.showMessageDialog(this, "Falha ao adicionar novo teste: " + e);
+        } else {
+            try {
+                t.setDisciplina(((Disciplina) cmbDisciplina.getSelectedItem()));
+                t.setDataGeracao(new java.sql.Date(format.parse(txtDataGeracao.getText()).getTime()));
+                t.setNumeroQuestoes(Integer.parseInt(txtNumeroQuestoes.getText()));
+                if (teste.update(t) != -1) {
+                    JOptionPane.showMessageDialog(this, "Teste editado com sucesso!");
+                } else{
+                    JOptionPane.showMessageDialog(this, "Falha ao editar teste.");
+                }
+            } catch (NumberFormatException | ParseException e) {
+                JOptionPane.showMessageDialog(this, "Falha ao editar: " + e);
+            }
         }
+        this.dispose();
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void cmbDisciplinaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDisciplinaItemStateChanged
+        Disciplina d  = (Disciplina) cmbDisciplina.getSelectedItem();
+        loadMaterias(d.getId());
+    }//GEN-LAST:event_cmbDisciplinaItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -195,9 +233,11 @@ public class AddTesteJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
     private javax.swing.JComboBox cmbDisciplina;
+    private javax.swing.JComboBox cmbMateria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtDataGeracao;
     private javax.swing.JTextField txtNumeroQuestoes;
@@ -209,8 +249,14 @@ public class AddTesteJFrame extends javax.swing.JFrame {
         ArrayList<Disciplina> disciplinaList = disciplina.retrieveAll();
         disciplinaList.stream().forEach((disciplina1) -> {
             cmbDisciplina.addItem(disciplina1);
-        });
+        });        
+    }
 
+    private void loadMaterias(int id) {
+        cmbMateria.removeAllItems();
+        MateriaDAO materia = new MateriaDAO();
+        ArrayList<Materia> materiaList = materia.retrieveAllByDisciplina(id);
+        //materiaList.
     }
 
 }
