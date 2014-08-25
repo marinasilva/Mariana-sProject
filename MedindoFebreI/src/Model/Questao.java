@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author marina.silva
@@ -15,7 +17,7 @@ public class Questao {
     int bimestre;
     int idMateria;
     String pergunta;
-
+    ArrayList<Resposta> respostas;
     public Questao() {
     }
 
@@ -24,6 +26,7 @@ public class Questao {
         this.bimestre = bimestre;
         this.idMateria = idMateria;
         this.pergunta = pergunta;
+        respostas = new ArrayList<>(4);
     }
 
     public int getId() {
@@ -56,5 +59,11 @@ public class Questao {
 
     public void setPergunta(String pergunta) {
         this.pergunta = pergunta;
+    }
+
+    public void addAnswer(Resposta resposta) {
+        if(respostas.size() >= 4) throw new IndexOutOfBoundsException("Não é permitido mais que 4 questoes.");
+        //Demais validações
+        respostas.add(resposta);
     }
 }

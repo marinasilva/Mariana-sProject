@@ -6,6 +6,7 @@
 
 package UI;
 
+import Model.Resposta;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -18,8 +19,18 @@ public class AddAnswerJFrame extends javax.swing.JFrame {
     /**
      * Creates new form AddAnswerJFrame
      */
+    private Resposta resposta;
+
+    public Resposta getResposta() {
+        return resposta;
+    }
+
+    public void setResposta(Resposta resposta) {
+        this.resposta = resposta;
+    }
     public AddAnswerJFrame() {
         initComponents();
+        resposta = new Resposta();
     }
 
     /**
@@ -104,7 +115,11 @@ public class AddAnswerJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-      
+        //Monto o obejto 
+        resposta.setCorreta(radioBtnCorrect.isSelected());
+        resposta.setResposta(txtAnswer.getText());
+        //o id dela é adicionado, logicamente, pelo DB
+        //e o id da pergunta, no frame de pergunta.
     }//GEN-LAST:event_btnSaveActionPerformed
 
     /**

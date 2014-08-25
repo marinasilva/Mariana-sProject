@@ -222,15 +222,22 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
                 //Até aqui está perfeito, vamos ver se funciona uaheuae
 
                 //Blz, agora quando o frame for fechado, pego o objeto que o user preencheu
-                if(addAnswer.getResposta() != null)
-                        JOptionPane.showMessageDialog(rootPane, "Questão adicionada");//questao.addAnswer(addAnswer.getResposta());//TODO
-                //E já chama a rotina de atualizar essa interface
-                    
+                if (addAnswer.getResposta() != null) {
+                    questao.addAnswer(addAnswer.getResposta());
+                    JOptionPane.showMessageDialog(rootPane, "Adicionado com sucesso!", getTitle(), JOptionPane.INFORMATION_MESSAGE);
+                }
+
             }
+
         });
+        
+        //Atualizar as paradinhas tudo.
+        UpdateJTableRespostas();
         addAnswer.setVisible(true);
     }//GEN-LAST:event_btnAddAnswerActionPerformed
-
+    private void UpdateJTableRespostas() {
+        //TODO:
+    }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         if (cmbDisciplina.getItemCount() <= 0) {
             return;
@@ -296,10 +303,8 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddQuestionJFrame().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new AddQuestionJFrame().setVisible(true);
         });
     }
 
