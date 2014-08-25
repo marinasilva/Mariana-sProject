@@ -23,7 +23,7 @@ public class Disciplina{
         this.nome = nome;
     }
 
-      public Disciplina() {
+    public Disciplina() {
         this.id = 0;
         this.nome = "";
         this.materiaList = new ArrayList<>();

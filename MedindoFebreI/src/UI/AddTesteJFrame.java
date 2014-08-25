@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 public class AddTesteJFrame extends javax.swing.JFrame {
 
     int insert;
+    Teste t = new Teste();
 
     public AddTesteJFrame() {
         initComponents();
@@ -28,15 +29,16 @@ public class AddTesteJFrame extends javax.swing.JFrame {
         cmbMateria.removeAllItems();
     }
 
-    public AddTesteJFrame(Teste t) {
+    public AddTesteJFrame(Teste teste) {
         initComponents();
         btnAdd.setText("Editar");
-        txtNumeroQuestoes.setText(String.valueOf(t.getNumeroQuestoes()));
+        txtNumeroQuestoes.setText(String.valueOf(teste.getNumeroQuestoes()));
         loadDisciplinas();
-        cmbDisciplina.setSelectedItem(t.getDisciplina().getNome());
-        txtDataGeracao.setText(new SimpleDateFormat("dd/MM/yyyy").format(t.getDataGeracao())); //DATA, eu te odeio!! Mas eu consegui.. #CHUUUPAA
+        cmbDisciplina.setSelectedItem(teste.getDisciplina().getNome());
+        txtDataGeracao.setText(new SimpleDateFormat("dd/MM/yyyy").format(teste.getDataGeracao())); //DATA, eu te odeio!! Mas eu consegui.. #CHUUUPAA
         insert = 2;
         cmbMateria.removeAllItems();
+        t.setId(teste.getId());
     }
 
     /**
@@ -172,12 +174,13 @@ public class AddTesteJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        Teste t = new Teste();
+        
         TesteDAO teste = new TesteDAO();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         if (insert == 1) { //valor 1 para inserir novo teste, valor 2 para editar
             try {
                 t.setDisciplina(((Disciplina) cmbDisciplina.getSelectedItem())); //CONFERIR
+                t.setMateria((Materia) cmbMateria.getSelectedItem());
                 t.setDataGeracao(new java.sql.Date(format.parse(txtDataGeracao.getText()).getTime()));
                 t.setNumeroQuestoes(Integer.parseInt(txtNumeroQuestoes.getText()));
                 if (teste.insert(t) != -1) {
@@ -191,6 +194,7 @@ public class AddTesteJFrame extends javax.swing.JFrame {
         } else {
             try {
                 t.setDisciplina(((Disciplina) cmbDisciplina.getSelectedItem()));
+                t.setMateria((Materia) cmbMateria.getSelectedItem());
                 t.setDataGeracao(new java.sql.Date(format.parse(txtDataGeracao.getText()).getTime()));
                 t.setNumeroQuestoes(Integer.parseInt(txtNumeroQuestoes.getText()));
                 if (teste.update(t) != -1) {

@@ -44,8 +44,8 @@ public class MateriaDAO {
             Statement st = connection.createStatement();
             ArrayList<Materia> materiaList = new ArrayList<>();
             ResultSet result = st.executeQuery("SELECT [id],[nome],[idDisciplina],[serie]  FROM [Materia]");
-            Materia m = new Materia();
             while (result.next()) {
+                Materia m = new Materia();
                 m.setNome(result.getString("nome"));
                 m.setId(result.getInt("id"));
                 m.setidDisciplina(result.getInt("idDisciplina"));

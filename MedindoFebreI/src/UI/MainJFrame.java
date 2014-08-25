@@ -76,6 +76,9 @@ public class MainJFrame extends javax.swing.JFrame {
         txtMateria = new javax.swing.JTextField();
         cmbDisciplina = new javax.swing.JComboBox();
         cmbSerie = new javax.swing.JComboBox();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -452,13 +455,56 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jTabbedPane5.addTab("Matérias", jPanel4);
 
+        jButton1.setText("Adicionar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(562, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(110, 110, 110))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jButton1)
+                .addContainerGap(244, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane5.addTab("Questões", jPanel5);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane5)
+                .addComponent(jTabbedPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -472,69 +518,66 @@ public class MainJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTesteActionPerformed
-        AddTesteJFrame addTeste = new AddTesteJFrame();
-        addTeste.setLocationRelativeTo(this);
-        addTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        addTeste.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                //Isso é chamado de classe anonima em Java.
-                //Em C# é tal como os eventos, aquele que tu da dois clicks no botão e já cria um metodo.
-                //Oque ele fez aqui foi adicionar um evento que sera chamado quando a janela fechar(windowClosing) ha ha ha
-                //Não se assuste com a sintaxe, pq eu me assustei quando vi ahuehae. Depois eu te explico melhor ela...
-                //Enfim, aqui tu pode chamar o seu update do grid. 
-                loadTestesGrid();
-
-            }
-        });
-        addTeste.setVisible(true);
-        /*addTeste.addWindowListener( new WindowAdapter() {
-         @Override
-         public void windowClosing(WindowEvent we) {
-         showDialog(f);
-         System.exit(0);
-         }
-         } );*/
-    }//GEN-LAST:event_btnAddTesteActionPerformed
-
-    private void btnUpdateTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTesteActionPerformed
+    private void btnUpdateMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateMateriaActionPerformed
         int x, y;
-        x = jTableTestes.getSelectedRow();
-        TesteDAO teste = new TesteDAO();
-        if (x != -1) 
-        {            
-            Teste t = teste.retrieveByID(Integer.parseInt((String) jTableTestes.getValueAt(x, 0)));
-            AddTesteJFrame editTeste = new AddTesteJFrame(t);
-            editTeste.setVisible(true);
-            editTeste.setTitle("Edição de Teste");
-            editTeste.setLocationRelativeTo(this);
-            editTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            editTeste.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) {
-                    loadTestesGrid();
-                }
-            });
-        } else {
-            JOptionPane.showMessageDialog(this, "Favor selecionar um teste para editar!");
-        }
-
-    }//GEN-LAST:event_btnUpdateTesteActionPerformed
-
-    private void btnAddDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDisciplinaActionPerformed
-        DisciplinaDAO disciplina = new DisciplinaDAO();
-        Disciplina d = new Disciplina();
+        x = jTableMaterias.getSelectedRow();
+        y = 0;
+        int id = Integer.parseInt((String) jTableMaterias.getValueAt(x, y));
+        MateriaDAO materia = new MateriaDAO();
+        Materia m = new Materia();
         try {
-            d.setNome(txtDisciplina.getText());
-            disciplina.insert(d);
-            JOptionPane.showMessageDialog(this, "Disciplina: " + d.getNome() + " inserida com sucesso!");
-            loadDisciplinasGrid();
+            m.setNome(txtMateria.getText());
+            m.setidDisciplina(((Disciplina) cmbDisciplina.getSelectedItem()).getId());
+            m.setSerie(cmbSerie.getSelectedIndex()); //VER SE VAI COMEÇAR EM 0 OU EM 1 //COMEÇA SEMPRE EM 0.
+            materia.update(m);
+            JOptionPane.showMessageDialog(this, "Matéria editada com sucesso!");
+            loadMateriasGrid();
+            txtMateria.setText("");
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, "Falha ao inserir a nova disciplina: " + e);
+            JOptionPane.showMessageDialog(this, "Falha ao editar a matéria: " + e);
         }
-        txtDisciplina.setText("");
-    }//GEN-LAST:event_btnAddDisciplinaActionPerformed
+    }//GEN-LAST:event_btnUpdateMateriaActionPerformed
+
+    private void btnDeleteMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteMateriaActionPerformed
+        int x, y;
+        x = jTableMaterias.getSelectedRow();
+        y = 0;
+        int id = Integer.parseInt((String) jTableMaterias.getValueAt(x, y));
+        MateriaDAO materia = new MateriaDAO();
+        try {
+            materia.delete(id);
+            JOptionPane.showMessageDialog(this, "Matéria deletada com sucesso!");
+            loadMateriasGrid();
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "Falha ao deletar a matéria: " + e);
+        }
+    }//GEN-LAST:event_btnDeleteMateriaActionPerformed
+
+    private void btnAddMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMateriaActionPerformed
+        Materia m = new Materia();
+        MateriaDAO materia = new MateriaDAO();
+        try {
+            m.setNome(txtMateria.getText());
+            m.setSerie(cmbSerie.getSelectedIndex());
+            m.setidDisciplina(((Disciplina) cmbDisciplina.getSelectedItem()).getId());
+            materia.insert(m);
+            JOptionPane.showMessageDialog(this, "Matéria inserida com sucesso!");
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "Falha ao inserir a matéria: " + e);
+        }
+    }//GEN-LAST:event_btnAddMateriaActionPerformed
+
+    private void jTableMateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMateriasMouseClicked
+        int x, y;
+        x = jTableMaterias.getSelectedRow();
+        y = 0;
+        int id = Integer.parseInt((String) jTableMaterias.getValueAt(x, y));
+        MateriaDAO materia = new MateriaDAO();
+        Materia m = materia.retrieveById(id);
+        txtMateria.setText(m.getNome());
+        //cmbDisciplina.setSelectedItem(m.getIdDisciplina());   saporra vai dar muito erro
+        //cmbSerie.setSelectedIndex(m.getSerie());  saporra vai dar muito erro [2]
+    }//GEN-LAST:event_jTableMateriasMouseClicked
 
     private void btnUpdateDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDisciplinaActionPerformed
         int x, y, z;
@@ -582,12 +625,49 @@ public class MainJFrame extends javax.swing.JFrame {
         loadDisciplinasGrid();
     }//GEN-LAST:event_btnDeletarDisciplinaActionPerformed
 
+    private void btnAddDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDisciplinaActionPerformed
+        DisciplinaDAO disciplina = new DisciplinaDAO();
+        Disciplina d = new Disciplina();
+        try {
+            d.setNome(txtDisciplina.getText());
+            disciplina.insert(d);
+            JOptionPane.showMessageDialog(this, "Disciplina: " + d.getNome() + " inserida com sucesso!");
+            loadDisciplinasGrid();
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "Falha ao inserir a nova disciplina: " + e);
+        }
+        txtDisciplina.setText("");
+    }//GEN-LAST:event_btnAddDisciplinaActionPerformed
+
     private void jTableDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDisciplinasMouseClicked
         int x, y;
         x = jTableDisciplinas.getSelectedRow();
         y = 1;
         txtDisciplina.setText((String) jTableDisciplinas.getValueAt(x, y));
     }//GEN-LAST:event_jTableDisciplinasMouseClicked
+
+    private void btnUpdateTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTesteActionPerformed
+        int x, y;
+        x = jTableTestes.getSelectedRow();
+        TesteDAO teste = new TesteDAO();
+        if (x != -1)
+        {
+            Teste t = teste.retrieveByID(Integer.parseInt((String) jTableTestes.getValueAt(x, 0)));
+            AddTesteJFrame editTeste = new AddTesteJFrame(t);
+            editTeste.setVisible(true);
+            editTeste.setTitle("Edição de Teste");
+            editTeste.setLocationRelativeTo(this);
+            editTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            editTeste.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadTestesGrid();
+                }
+            });
+        } else {
+            JOptionPane.showMessageDialog(this, "Favor selecionar um teste para editar!");
+        }
+    }//GEN-LAST:event_btnUpdateTesteActionPerformed
 
     private void btnDeleteTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTesteActionPerformed
         int x, y;
@@ -608,66 +688,38 @@ public class MainJFrame extends javax.swing.JFrame {
         loadTestesGrid();
     }//GEN-LAST:event_btnDeleteTesteActionPerformed
 
-    private void btnAddMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMateriaActionPerformed
-        Materia m = new Materia();
-        MateriaDAO materia = new MateriaDAO();
-        try {
-            m.setNome(txtMateria.getText());
-            m.setSerie(cmbSerie.getSelectedIndex());
-            m.setidDisciplina(((Disciplina) cmbDisciplina.getSelectedItem()).getId());
-            materia.insert(m);
-            JOptionPane.showMessageDialog(this, "Matéria inserida com sucesso!");
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, "Falha ao inserir a matéria: " + e);
-        }
-    }//GEN-LAST:event_btnAddMateriaActionPerformed
+    private void btnAddTesteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTesteActionPerformed
+        AddTesteJFrame addTeste = new AddTesteJFrame();
+        addTeste.setLocationRelativeTo(this);
+        addTeste.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addTeste.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                //Isso é chamado de classe anonima em Java.
+                //Em C# é tal como os eventos, aquele que tu da dois clicks no botão e já cria um metodo.
+                //Oque ele fez aqui foi adicionar um evento que sera chamado quando a janela fechar(windowClosing) ha ha ha
+                //Não se assuste com a sintaxe, pq eu me assustei quando vi ahuehae. Depois eu te explico melhor ela...
+                //Enfim, aqui tu pode chamar o seu update do grid.
+                loadTestesGrid();
 
-    private void btnDeleteMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteMateriaActionPerformed
-        int x, y;
-        x = jTableMaterias.getSelectedRow();
-        y = 0;
-        int id = Integer.parseInt((String) jTableMaterias.getValueAt(x, y));
-        MateriaDAO materia = new MateriaDAO();
-        try {
-            materia.delete(id);
-            JOptionPane.showMessageDialog(this, "Matéria deletada com sucesso!");
-            loadMateriasGrid();
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, "Falha ao deletar a matéria: " + e);
-        }
-    }//GEN-LAST:event_btnDeleteMateriaActionPerformed
+            }
+        });
+        addTeste.setVisible(true);
+        /*addTeste.addWindowListener( new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                showDialog(f);
+                System.exit(0);
+            }
+        } );*/
+    }//GEN-LAST:event_btnAddTesteActionPerformed
 
-    private void btnUpdateMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateMateriaActionPerformed
-        int x, y;
-        x = jTableMaterias.getSelectedRow();
-        y = 0;
-        int id = Integer.parseInt((String) jTableMaterias.getValueAt(x, y));
-        MateriaDAO materia = new MateriaDAO();
-        Materia m = new Materia();
-        try {
-            m.setNome(txtMateria.getText());
-            m.setidDisciplina(((Disciplina) cmbDisciplina.getSelectedItem()).getId());
-            m.setSerie(cmbSerie.getSelectedIndex()); //VER SE VAI COMEÇAR EM 0 OU EM 1 //COMEÇA SEMPRE EM 0.
-            materia.update(m);
-            JOptionPane.showMessageDialog(this, "Matéria editada com sucesso!");
-            loadMateriasGrid();
-            txtMateria.setText("");
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, "Falha ao editar a matéria: " + e);
-        }
-    }//GEN-LAST:event_btnUpdateMateriaActionPerformed
-
-    private void jTableMateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMateriasMouseClicked
-        int x, y;
-        x = jTableMaterias.getSelectedRow();
-        y = 0;
-        int id = Integer.parseInt((String) jTableMaterias.getValueAt(x, y));
-        MateriaDAO materia = new MateriaDAO();
-        Materia m = materia.retrieveById(id);
-        txtMateria.setText(m.getNome());
-        //cmbDisciplina.setSelectedItem(m.getIdDisciplina());   saporra vai dar muito erro
-        //cmbSerie.setSelectedIndex(m.getSerie());  saporra vai dar muito erro [2]
-    }//GEN-LAST:event_jTableMateriasMouseClicked
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        AddQuestionJFrame addQuestion = new AddQuestionJFrame();
+        addQuestion.setLocationRelativeTo(this);
+        addQuestion.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        addQuestion.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -708,6 +760,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnUpdateTeste;
     private javax.swing.JComboBox cmbDisciplina;
     private javax.swing.JComboBox cmbSerie;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -716,6 +769,8 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

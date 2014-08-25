@@ -45,8 +45,7 @@ public class DisciplinaDAO {
             ArrayList<Disciplina> disciplinaList = new ArrayList<>();
             ResultSet result = st.executeQuery("SELECT [id],[nome] FROM [Disciplina]");
             while (result.next()) {
-                Disciplina d = new Disciplina();
-                
+                Disciplina d = new Disciplina();                
                 d.setId(result.getInt("id"));
                 d.setNome(result.getString("nome"));
                 d.getMateriaList().addAll(materiaDAO.retrieveAllByDisciplina(d.getId()));

@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 public class TesteDAO {
 
     public int insert(Teste t) {
-
         try {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement st = connection.prepareStatement("INSERT INTO [Teste] ([idMateria],[dataGeracao],[numeroQuestoes]) VALUES (?, ?, ?)");
@@ -48,10 +47,10 @@ public class TesteDAO {
                     + "FROM dbo.Disciplina INNER JOIN\n"
                     + " dbo.Materia ON dbo.Disciplina.id = dbo.Materia.idDisciplina INNER JOIN\n"
                     + " dbo.Teste ON dbo.Disciplina.id = dbo.Teste.idMateria");
-            Teste t = new Teste();
-            Disciplina d = new Disciplina();
-            Materia m = new Materia();
             while (result.next()) {
+                Teste t = new Teste();
+                Disciplina d = new Disciplina();
+                Materia m = new Materia();
                 t.setId(result.getInt(1));
                 d.setId(result.getInt(6));
                 d.setNome(result.getString(8));
@@ -73,7 +72,6 @@ public class TesteDAO {
     }
 
     public int delete(int id) {
-
         try {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement st = connection.prepareStatement("DELETE FROM [Teste] WHERE [id] = " + id);
@@ -84,7 +82,7 @@ public class TesteDAO {
         }
     }
 
-    public Teste retrieveByID(int id) { 
+    public Teste retrieveByID(int id) {
         try {
             Connection connection = ConnectionFactory.getConnection();
             Statement st = connection.createStatement();
@@ -108,7 +106,7 @@ public class TesteDAO {
         }
     }
 
-    public int update(Teste t) { 
+    public int update(Teste t) {
         try {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement st = connection.prepareStatement("UPDATE [Teste] SET [idMateria] = ?,[dataGeracao] = ?,[numeroQuestoes] = ? WHERE [id] = " + t.getId());

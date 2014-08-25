@@ -16,6 +16,7 @@ public class Teste {
 
     int id;
     Disciplina disciplina;
+    Materia materia;
     Date dataGeracao;
     int numeroQuestoes;
 
@@ -25,9 +26,17 @@ public class Teste {
         this.disciplina = new Disciplina();
         this.dataGeracao = Date.valueOf(LocalDate.MIN);
         this.numeroQuestoes = 0;
+        this.materia = new Materia();
+    }
+
+    public Materia getMateria() {
+        return materia;
+    }
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
     
-
     public int getId() {
         return id;
     }

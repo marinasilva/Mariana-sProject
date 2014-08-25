@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Model;
 
 /**
@@ -12,10 +11,20 @@ package Model;
  */
 public class Materia {
 
-  int id;
-  String nome;
-  int idDisciplina;
-  int serie;
+    int id;
+    String nome;
+    int idDisciplina;
+    int serie;
+
+    public Materia() {
+    }
+
+    public Materia(int id, String nome, int idDisciplina, int serie) {
+        this.id = id;
+        this.nome = nome;
+        this.idDisciplina = idDisciplina;
+        this.serie = serie;
+    }
 
     public int getId() {
         return id;
@@ -49,6 +58,8 @@ public class Materia {
         this.serie = serie;
     }
 
-    public Materia() {
-    }    
+     @Override
+    public String toString() {
+        return nome;
+    }
 }
