@@ -26,6 +26,8 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
     /**
      * Creates new form AddQuestionJFrame
      */
+    private Questao questao;
+
     public AddQuestionJFrame() {
         initComponents();
         loadDisciplinas();
@@ -215,16 +217,24 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
         addAnswer.setLocationRelativeTo(this);
         addAnswer.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addAnswer.addWindowListener(new WindowAdapter() {
-             @Override
+            @Override
             public void windowClosed(WindowEvent e) {
-                
+                //Até aqui está perfeito, vamos ver se funciona uaheuae
+
+                //Blz, agora quando o frame for fechado, pego o objeto que o user preencheu
+                if(addAnswer.getResposta() != null)
+                        JOptionPane.showMessageDialog(rootPane, "Questão adicionada");//questao.addAnswer(addAnswer.getResposta());//TODO
+                //E já chama a rotina de atualizar essa interface
+                    
             }
         });
         addAnswer.setVisible(true);
     }//GEN-LAST:event_btnAddAnswerActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        if(cmbDisciplina.getItemCount() <= 0) return;
+        if (cmbDisciplina.getItemCount() <= 0) {
+            return;
+        }
         Disciplina d = (Disciplina) cmbDisciplina.getSelectedItem();
         loadMaterias(d.getId());
     }//GEN-LAST:event_formWindowOpened
@@ -249,9 +259,9 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
             q.setPergunta(txtQuestion.getText());
             if (questão.insert(q) != -1) {
                 JOptionPane.showMessageDialog(this, "Questão inserida com sucesso!");
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Falha ao inserir!");
-            }            
+            }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Falha ao inserir a questão: " + e);
         }
