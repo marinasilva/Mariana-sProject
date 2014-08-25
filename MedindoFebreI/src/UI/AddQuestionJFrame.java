@@ -208,6 +208,7 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if(cmbDisciplina.getItemCount() <= 0) return;
         Disciplina d = (Disciplina) cmbDisciplina.getSelectedItem();
         loadMaterias(d.getId());
     }//GEN-LAST:event_formWindowOpened
