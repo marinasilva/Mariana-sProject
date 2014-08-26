@@ -27,12 +27,14 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
     /**
      * Creates new form AddQuestionJFrame
      */
-    private Questao questao = new Questao();
+    private Questao questao;
 
     public AddQuestionJFrame() {
         initComponents();
         loadDisciplinas();
         loadBimestres();
+        
+        questao = new Questao();
     }
 
     /**
@@ -224,7 +226,8 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
 
                 //Blz, agora quando o frame for fechado, pego o objeto que o user preencheu
                 if (addAnswer.getResposta() != null) {
-                    questao.addAnswer(addAnswer.getResposta());
+                    Resposta resposta = addAnswer.getResposta();
+                    questao.addAnswer(resposta);
                     JOptionPane.showMessageDialog(rootPane, "Adicionado com sucesso!", getTitle(), JOptionPane.INFORMATION_MESSAGE);
                 }
                 UpdateJTableRespostas();
