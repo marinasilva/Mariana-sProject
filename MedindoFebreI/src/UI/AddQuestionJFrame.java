@@ -11,6 +11,7 @@ import DAL.QuestaoDAO;
 import Model.Disciplina;
 import Model.Materia;
 import Model.Questao;
+import Model.Resposta;
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -26,7 +27,7 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
     /**
      * Creates new form AddQuestionJFrame
      */
-    private Questao questao;
+    private Questao questao = new Questao();
 
     public AddQuestionJFrame() {
         initComponents();
@@ -226,17 +227,24 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
                     questao.addAnswer(addAnswer.getResposta());
                     JOptionPane.showMessageDialog(rootPane, "Adicionado com sucesso!", getTitle(), JOptionPane.INFORMATION_MESSAGE);
                 }
-
+                UpdateJTableRespostas();
             }
 
         });
-        
+
         //Atualizar as paradinhas tudo.
-        UpdateJTableRespostas();
         addAnswer.setVisible(true);
     }//GEN-LAST:event_btnAddAnswerActionPerformed
     private void UpdateJTableRespostas() {
-        //TODO:
+        ArrayList<Resposta> answerList = questao.getRespostas();
+        ArrayList<String> columns = new ArrayList<>();
+        ArrayList<String[]> values = new ArrayList<>();
+        columns.add("Resposta");
+        columns.add("Correta");
+
+        answerList.stream().forEach((Resposta r) -> {
+            values.add(new String[]{r.getResposta(), String.valueOf(r.isCorreta())});
+        });
     }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         if (cmbDisciplina.getItemCount() <= 0) {

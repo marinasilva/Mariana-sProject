@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/Model/Questao.java</file>
             <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/UI/AddQuestionJFrame.java</file>
-            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/Model/Teste.java</file>
-            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/DAL/MateriaDAO.java</file>
-            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/DAL/TesteDAO.java</file>
-            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/DAL/QuestaoDAO.java</file>
-            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/UI/AddTesteJFrame.java</file>
+            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/Model/Resposta.java</file>
+            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/UI/AddAnswerJFrame.java</file>
+            <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/DAL/RespostaDAO.java</file>
             <file>file:/C:/Users/marina.silva/Documents/GitHub/Mariana-sProject/MedindoFebreI/src/UI/MainJFrame.java</file>
         </group>
     </open-files>

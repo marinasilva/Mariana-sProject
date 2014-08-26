@@ -120,6 +120,7 @@ public class AddAnswerJFrame extends javax.swing.JFrame {
         resposta.setResposta(txtAnswer.getText());
         //o id dela é adicionado, logicamente, pelo DB
         //e o id da pergunta, no frame de pergunta.
+        this.dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
