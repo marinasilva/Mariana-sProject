@@ -17,6 +17,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -232,7 +234,6 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
                 }
                 UpdateJTableRespostas();
             }
-
         });
 
         //Atualizar as paradinhas tudo.
@@ -245,9 +246,14 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
         columns.add("Resposta");
         columns.add("Correta");
 
+        //Precisa validar o checkbox
         answerList.stream().forEach((Resposta r) -> {
             values.add(new String[]{r.getResposta(), String.valueOf(r.isCorreta())});
         });
+        
+        TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());
+        
+        jTableRespostas.setModel(tableModel);
     }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         if (cmbDisciplina.getItemCount() <= 0) {

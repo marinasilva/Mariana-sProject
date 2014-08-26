@@ -18,12 +18,12 @@ public class Questao {
     int idMateria;
     String pergunta;
     ArrayList<Resposta> respostas;
-    
+
     public Questao() {
-     id = 0;
-     bimestre = 0;
-     pergunta = "";
-     respostas = new ArrayList<>(4);
+        id = 0;
+        bimestre = 0;
+        pergunta = "";
+        respostas = new ArrayList<>(4);
     }
 
     public Questao(int id, int bimestre, int idMateria, String pergunta) {
@@ -67,13 +67,14 @@ public class Questao {
     }
 
     public void addAnswer(Resposta resposta) {
-        if(respostas.size() >= 4) 
+        if (respostas.size() >= 4) {
             throw new IndexOutOfBoundsException("Não é permitido mais que 4 respostas.");
+        }
         //Demais validações
         respostas.add(resposta);
     }
 
     public ArrayList<Resposta> getRespostas() {
         return respostas;
-    }    
+    }
 }
