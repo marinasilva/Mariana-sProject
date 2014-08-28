@@ -242,18 +242,21 @@ public class AddQuestionJFrame extends javax.swing.JFrame {
     private void UpdateJTableRespostas() {
         ArrayList<Resposta> answerList = questao.getRespostas();
         ArrayList<String> columns = new ArrayList<>();
-        ArrayList<String[]> values = new ArrayList<>();
+        Object [][] values;
+        //ArrayList<String[]> values = new ArrayList<>();
         columns.add("Resposta");
         columns.add("Correta");
+        
+       
 
         //Precisa validar o checkbox
-        answerList.stream().forEach((Resposta r) -> {
+        /*answerList.stream().forEach((Resposta r) -> {
             values.add(new String[]{r.getResposta(), String.valueOf(r.isCorreta())});
-        });
+        });*/
         
-        TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());
+       // TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());
         
-        jTableRespostas.setModel(tableModel);
+        //jTableRespostas.setModel(tableModel);
     }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         if (cmbDisciplina.getItemCount() <= 0) {
